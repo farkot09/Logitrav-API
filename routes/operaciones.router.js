@@ -88,5 +88,24 @@ router.post('/cargarNumeracion/',upload.single("miArchvo"), async(req, res) => {
     
 });
 
+//------------FIN RUTAS DE NUMERACION --------------//
+
+//----- INICIO DE SERVICIOS DE REVISION ------------------//
+
+router.post('/revision/', async(req, res) => {
+  const body = req.body 
+  const data = await service.revision(body)
+  res.status(data.statusCode).json(data)    
+    
+});
+
+router.get('/revision/motonave/:id', async(req, res) => {
+  const id = req.params.id
+  const data = await service.revisionPorMotonave(id)
+  res.status(data.statusCode).json(data)    
+  
+});
+
+//----- FIN DE SERVICIOS DE REVISION ------------------//
 
 module.exports = router;
