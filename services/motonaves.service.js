@@ -46,6 +46,17 @@ class motonaveService {
     return this.resultado;
   }
 
+  async activas() {
+    await Motonave.find({operacion: true})
+      .then((data) => {
+        this.resultado = errorHandler(false, 200, 'OK', data);
+      })
+      .catch((error) => {
+        this.resultado = errorHandler(true, 400, 'Error, not found', error);
+      });
+    return this.resultado;
+  }
+
   async buscarUno(id) {
     if (ObjectId.isValid(id)) {
       await Motonave.findById({ _id: id })

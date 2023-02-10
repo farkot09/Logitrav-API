@@ -9,6 +9,11 @@ router.get('/', async(req, res) => {
     res.status(data.statusCode).json(data)    
     
 });
+router.get('/activas/', async(req, res) => {
+  const data = await service.activas()
+  res.status(data.statusCode).json(data)    
+  
+});
 
 router.get('/:id', async(req, res) => {
   const id = req.params.id
@@ -16,6 +21,7 @@ router.get('/:id', async(req, res) => {
   res.status(data.statusCode).json(data)    
   
 });
+
 
 router.post('/', async(req, res) => {
   const body = req.body 
