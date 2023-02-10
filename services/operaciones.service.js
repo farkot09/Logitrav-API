@@ -1,10 +1,14 @@
 const Marcacion = require('../schemas/operaciones/marcacion.schema');
+const Recibo = require('../schemas/operaciones/recibo.schema');
+const Toma = require('../schemas/operaciones/toma.schema');
+const Numeracion = require('../schemas/operaciones/numeracion.schema');
 const { errorHandler } = require('../middlewares/error.handler');
 const ObjectId = require('mongoose').Types.ObjectId;
-const MotonavesServices = require('./motonaves.service');
 const ChasisServices = require('./chasis.service');
+const XLSX = require('xlsx');
+const fs = require('fs');
 
-const servicesMotonaves = new MotonavesServices();
+
 const servicesChasis = new ChasisServices();
 
 class OperacionesServices {
@@ -14,30 +18,36 @@ class OperacionesServices {
   //----- INICIO DE SERVICIOS DE MARCACION ------------------//
 
   async maracacion(data) {
-    const { id_motonave,id_usuario, id_chasis } = data
+    const { id_motonave, id_usuario, id_chasis } = data;
     const newMarcacion = new Marcacion({
       id_motonave,
       id_usuario,
       id_chasis,
-      fecha:Date.now()
-    })
+      fecha: Date.now(),
+    });
 
-    const resChasis = await servicesChasis.buscarUno(id_chasis)
+    const resChasis = await servicesChasis.buscarUno(id_chasis);
 
     if (resChasis.error === false) {
-      await newMarcacion.save().then((res) => {
-        this.resultado = errorHandler(false, 201, "Created", res)
-      }).catch((err) => {
-        this.resultado = errorHandler(true, 400, "Verify your Chasis", err)
-      })
-    }else{
-      this.resultado = errorHandler(true, 400, "invalid Input", resChasis.error)
+      await newMarcacion
+        .save()
+        .then((res) => {
+          this.resultado = errorHandler(false, 201, 'Created', res);
+        })
+        .catch((err) => {
+          this.resultado = errorHandler(true, 400, 'Verify your Chasis', err);
+        });
+    } else {
+      this.resultado = errorHandler(
+        true,
+        400,
+        'invalid Input',
+        resChasis.error
+      );
     }
-
 
     return this.resultado;
   }
-
 
   async marcacionPorMotonave(id) {
     if (ObjectId.isValid(id)) {
@@ -54,63 +64,46 @@ class OperacionesServices {
     }
     return this.resultado;
   }
-  /*
-  async todas() {
-    await Chasis.find({})
-      .then((data) => {
-        this.resultado = errorHandler(false, 200, 'OK', data);
-      })
-      .catch((error) => {
-        this.resultado = errorHandler(true, 400, 'Error, not found', error);
-      });
-    return this.resultado;
-  }
- 
 
-  async buscarUno(id) {
-    if (ObjectId.isValid(id)) {
-      await Chasis.findById({ _id: id }).then((res) => {
-        if (res) {
-          this.resultado = errorHandler(false, 200, 'OK', res);
-        } else {
-          this.resultado = errorHandler(true, 400, 'OK', res);
-        }
-      });
+  //----- FIN DE SERVICIOS DE MARCACION ------------------//
+
+  //----- INICIO DE SERVICIOS DE RECIBO ------------------//
+
+  async recibo(data) {
+    const { id_motonave, id_usuario, id_chasis } = data;
+    const newMarcacion = new Recibo({
+      id_motonave,
+      id_usuario,
+      id_chasis,
+      fecha: Date.now(),
+    });
+
+    const resChasis = await servicesChasis.buscarUno(id_chasis);
+
+    if (resChasis.error === false) {
+      await newMarcacion
+        .save()
+        .then((res) => {
+          this.resultado = errorHandler(false, 201, 'Created', res);
+        })
+        .catch((err) => {
+          this.resultado = errorHandler(true, 400, 'Verify your Chasis', err);
+        });
     } else {
       this.resultado = errorHandler(
         true,
         400,
-        'id Not valid, not as ObjectId',
-        []
+        'invalid Input',
+        resChasis.error
       );
     }
+
     return this.resultado;
   }
 
-
-  async eliminarPorMotonave(id) {
+  async reciboPorMotonave(id) {
     if (ObjectId.isValid(id)) {
-      await Chasis.deleteMany({ id_motonave: id }).then((res) => {
-        if (res) {
-          this.resultado = errorHandler(false, 200, 'Eliminated', id);
-        } else {
-          this.resultado = errorHandler(true, 400, 'id Not Exist', []);
-        }
-      });
-    } else {
-      this.resultado = errorHandler(
-        true,
-        400,
-        "'id Not valid, not as ObjectId",
-        []
-      );
-    }
-    return this.resultado;
-  }
-
-  async buscarPorMotonave(id) {
-    if (ObjectId.isValid(id)) {
-      await Chasis.find({ id_motonave: id }).then((res) => {
+      await Recibo.find({ id_motonave: id }).then((res) => {
         this.resultado = errorHandler(false, 200, 'OK', res);
       });
     } else {
@@ -123,7 +116,110 @@ class OperacionesServices {
     }
     return this.resultado;
   }
-*/
+
+  //----- FIN DE SERVICIOS DE MARCACION ------------------//
+
+  //----- INICIO DE SERVICIOS DE TOMA DE IMPRONTAS ------------------//
+
+  async toma(data) {
+    const { id_motonave, id_usuario, id_chasis } = data;
+    const newMarcacion = new Toma({
+      id_motonave,
+      id_usuario,
+      id_chasis,
+      fecha: Date.now(),
+    });
+
+    const resChasis = await servicesChasis.buscarUno(id_chasis);
+
+    if (resChasis.error === false) {
+      await newMarcacion
+        .save()
+        .then((res) => {
+          this.resultado = errorHandler(false, 201, 'Created', res);
+        })
+        .catch((err) => {
+          this.resultado = errorHandler(true, 400, 'Verify your Chasis', err);
+        });
+    } else {
+      this.resultado = errorHandler(
+        true,
+        400,
+        'invalid Input',
+        resChasis.error
+      );
+    }
+
+    return this.resultado;
+  }
+
+  async tomaPorMotonave(id) {
+    if (ObjectId.isValid(id)) {
+      await Toma.find({ id_motonave: id }).then((res) => {
+        this.resultado = errorHandler(false, 200, 'OK', res);
+      });
+    } else {
+      this.resultado = errorHandler(
+        true,
+        400,
+        'id Not valid, not as ObjectId',
+        []
+      );
+    }
+    return this.resultado;
+  }
+
+  //----- FIN DE SERVICIOS DE TOMA DE IMPRONTAS ------------------//
+
+  async cargarNumeracion() {
+    const path = require('path');
+    const dirPath = path.join(__dirname, '../uploads/NUMERACION.xlsx');
+    const workbook = XLSX.readFile(dirPath);
+    const sheet_name_list = workbook.SheetNames;
+    const xlData = XLSX.utils.sheet_to_json(
+      workbook.Sheets[sheet_name_list[0]]
+    );
+
+    for (let i = 0; i < xlData.length; i++) {
+      await servicesChasis.buscarPorChasis(xlData[i].CHASIS).then((res) => {        
+        if (res.data.length !== 0) {
+          const newNumeracion = new Numeracion({
+            id_chasis: res.data[0]._id,
+            chasis: res.data[0].chasis,
+            numero: xlData[i].NUMERO,
+          });
+          newNumeracion
+            .save()
+            .then((res) => {
+              return this.resultado = errorHandler(false, 201, 'upload Success', res);
+              
+            })
+            .catch((err) => {
+              this.resultado = errorHandler(true, 500, 'upload faile', err);
+              
+            });
+          
+        }else{
+          this.resultado = errorHandler(true, 500, 'Data not found', {});
+        }
+        
+      });
+    }
+
+    fs.unlinkSync(dirPath);
+    return this.resultado;
+  }
+
+  async todasNumeracion() {
+    await Numeracion.find({}).populate("id_chasis")
+      .then((data) => {
+        this.resultado = errorHandler(false, 200, 'OK', data);
+      })
+      .catch((error) => {
+        this.resultado = errorHandler(true, 400, 'Error, not found', error);
+      });
+    return this.resultado;
+  }
 }
 
 module.exports = OperacionesServices;

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const { Schema, model } = mongoose;
 
-const MarcacionSchema = new Schema({
+const TomaSchema = new Schema({
   id_motonave: {
     type: Schema.Types.ObjectId,
     ref: 'Motonave',
@@ -15,6 +15,6 @@ const MarcacionSchema = new Schema({
   fecha: Date,
 });
 
-const Marcacion = model('Marcacion', MarcacionSchema);
+const Toma = model('Toma', TomaSchema);
 
-module.exports = Marcacion;
+module.exports = Toma;

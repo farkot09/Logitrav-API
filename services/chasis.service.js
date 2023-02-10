@@ -72,6 +72,19 @@ class ChasisServices {
     return this.resultado;
   }
 
+  async buscarPorChasis(chasis) {
+      
+      await Chasis.find({chasis: chasis}).then((res) => {
+        if (res) {
+          this.resultado = errorHandler(false, 200, 'OK', res);
+        } else {
+          this.resultado = errorHandler(true, 400, 'OK', res);
+        }
+      });
+    
+    return this.resultado;
+  }
+
 
   async eliminarPorMotonave(id) {
     if (ObjectId.isValid(id)) {
