@@ -28,6 +28,13 @@ router.post('/marcacion/', async(req, res) => {
     
 });
 
+router.get('/marcacion/:id', async(req, res) => {
+  const id = req.params.id
+  const data = await service.marcacionPorChasis(id)
+  res.status(data.statusCode).json(data)    
+  
+});
+
 router.get('/marcacion/motonave/:id', async(req, res) => {
   const id = req.params.id
   const data = await service.marcacionPorMotonave(id)
@@ -35,8 +42,6 @@ router.get('/marcacion/motonave/:id', async(req, res) => {
   
 });
 //------------FIN RUTAS DE MARCACION A BORDO --------------//
-
-
 
 
 //------------INICIO RUTAS DE RECIBOENPATIO --------------//
@@ -48,12 +53,20 @@ router.post('/recibo/', async(req, res) => {
     
 });
 
+router.get('/recibo/:id', async(req, res) => {
+  const id = req.params.id
+  const data = await service.reciboPorChasis(id)
+  res.status(data.statusCode).json(data)    
+  
+});
+
 router.get('/recibo/motonave/:id', async(req, res) => {
   const id = req.params.id
   const data = await service.reciboPorMotonave(id)
   res.status(data.statusCode).json(data)    
   
 });
+
 
 
 //------------FIN RUTAS DE RECIBOENPATIO --------------//
@@ -67,6 +80,13 @@ router.post('/toma/', async(req, res) => {
   const data = await service.toma(body)
   res.status(data.statusCode).json(data) 
     
+});
+
+router.get('/toma/:id', async(req, res) => {
+  const id = req.params.id
+  const data = await service.tomaPorChasis(id)
+  res.status(data.statusCode).json(data)    
+  
 });
 
 router.get('/toma/motonave/:id', async(req, res) => {
@@ -88,6 +108,13 @@ router.get('/numeracion/', async(req, res) => {
     
 });
 
+router.get('/numeracion/:id', async(req, res) => {
+  const id = req.params.id
+  const data = await service.numeracionPorChasis(id)
+  res.status(data.statusCode).json(data)    
+  
+});
+
 router.post('/cargarNumeracion/',upload.single("miArchvo"), async(req, res) => {  
   const data = await service.cargarNumeracion()
   res.status(data.statusCode).json(data)  
@@ -105,6 +132,13 @@ router.post('/revision/', async(req, res) => {
   const data = await service.revision(body)
   res.status(data.statusCode).json(data)    
     
+});
+
+router.get('/revision/:id', async(req, res) => {
+  const id = req.params.id
+  const data = await service.revisionPorChasis(id)
+  res.status(data.statusCode).json(data)    
+  
 });
 
 router.get('/revision/motonave/:id', async(req, res) => {

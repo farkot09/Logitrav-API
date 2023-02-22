@@ -65,6 +65,22 @@ class OperacionesServices {
     return this.resultado;
   }
 
+  async marcacionPorChasis(id) {
+    if (ObjectId.isValid(id)) {
+      await Marcacion.find({ id_chasis: id }).then((res) => {
+        this.resultado = errorHandler(false, 200, 'OK', res);
+      });
+    } else {
+      this.resultado = errorHandler(
+        true,
+        400,
+        'id Not valid, not as ObjectId',
+        []
+      );
+    }
+    return this.resultado;
+  }
+
   //----- FIN DE SERVICIOS DE MARCACION ------------------//
 
   //----- INICIO DE SERVICIOS DE RECIBO ------------------//
@@ -104,6 +120,22 @@ class OperacionesServices {
   async reciboPorMotonave(id) {
     if (ObjectId.isValid(id)) {
       await Recibo.find({ id_motonave: id }).then((res) => {
+        this.resultado = errorHandler(false, 200, 'OK', res);
+      });
+    } else {
+      this.resultado = errorHandler(
+        true,
+        400,
+        'id Not valid, not as ObjectId',
+        []
+      );
+    }
+    return this.resultado;
+  }
+
+  async reciboPorChasis(id) {
+    if (ObjectId.isValid(id)) {
+      await Recibo.find({ id_chasis: id }).then((res) => {
         this.resultado = errorHandler(false, 200, 'OK', res);
       });
     } else {
@@ -169,6 +201,21 @@ class OperacionesServices {
     return this.resultado;
   }
 
+  async tomaPorChasis(id) {
+    if (ObjectId.isValid(id)) {
+      await Toma.find({ id_chasis: id }).then((res) => {
+        this.resultado = errorHandler(false, 200, 'OK', res);
+      });
+    } else {
+      this.resultado = errorHandler(
+        true,
+        400,
+        'id Not valid, not as ObjectId',
+        []
+      );
+    }
+    return this.resultado;
+  }
   //----- FIN DE SERVICIOS DE TOMA DE IMPRONTAS ------------------//
 
   //----- INICIO DE SERVICIOS DE NUMERACION ------------------//
@@ -224,6 +271,22 @@ class OperacionesServices {
       });
     return this.resultado;
   }
+
+  async numeracionPorChasis(id) {
+    if (ObjectId.isValid(id)) {
+      await Numeracion.find({ id_chasis: id }).then((res) => {
+        this.resultado = errorHandler(false, 200, 'OK', res);
+      });
+    } else {
+      this.resultado = errorHandler(
+        true,
+        400,
+        'id Not valid, not as ObjectId',
+        []
+      );
+    }
+    return this.resultado;
+  }
   //----- FIN DE SERVICIOS DE NUMERACION ------------------//
 
   //----- INICIO DE SERVICIOS DE REVISION ------------------//
@@ -263,6 +326,22 @@ class OperacionesServices {
   async revisionPorMotonave(id) {
     if (ObjectId.isValid(id)) {
       await Revision.find({ id_motonave: id }).then((res) => {
+        this.resultado = errorHandler(false, 200, 'OK', res);
+      });
+    } else {
+      this.resultado = errorHandler(
+        true,
+        400,
+        'id Not valid, not as ObjectId',
+        []
+      );
+    }
+    return this.resultado;
+  }
+
+  async revisionPorChasis(id) {
+    if (ObjectId.isValid(id)) {
+      await Revision.find({ id_chasis: id }).then((res) => {
         this.resultado = errorHandler(false, 200, 'OK', res);
       });
     } else {
