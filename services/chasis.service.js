@@ -3,6 +3,7 @@ const { errorHandler } = require('../middlewares/error.handler');
 const ObjectId = require('mongoose').Types.ObjectId;
 const MotonavesServices = require('../services/motonaves.service');
 const BlsServices = require('../services/bls.service');
+const XLSX = require('xlsx');
 
 const servicesMotonaves = new MotonavesServices();
 const servicesBl = new BlsServices();
@@ -120,6 +121,51 @@ class ChasisServices {
       );
     }
     return this.resultado;
+  }
+
+  async generarPlantilla(id) {    
+    const mn = await  servicesMotonaves.buscarUno(id)
+    const bls = await servicesBl.buscarPorMotonave(id)    
+
+    if (mn.data.cantidad_bls !== bls.data.length) {
+      return this.resultado = errorHandler(true, 500, 'Data Bls Quatity is not correct', mn.data.cantidad_bls);
+    }
+
+    var headerE = ["item","id_motonave","nombre_motonave","id_bl","numeroBl", "chasis", "modelo", "version", "color", "motor"]
+    var dataE =[]
+    for (let index = 0; index < bls.data.length; index++) {
+      const element = bls.data[index];
+      
+
+
+      for (let index2 = 0; index2 < element.cantidad; index2++) {
+        
+        var data2 = {
+          item:index2+1,
+          id_motonave:mn.data._id.toString(),
+          nombre_motonave:mn.data.nombre_motonave,
+          id_bl:element._id.toString(),
+          numeroBl:element.numero_bl,
+          chasis:"",
+          modelo:"",
+          version:"",
+          color:"",
+          motor:"",
+
+        }
+
+        dataE.push(data2)
+        
+      }
+      
+      
+    }
+    
+    const wb = XLSX.utils.book_new();    
+    XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(dataE, {header:headerE, skipHeader:false}), "Hoja1");
+
+    return  this.resultado = wb
+    
   }
 
 }
