@@ -74,8 +74,8 @@ class ChasisServices {
 
   async buscarPorChasis(chasis) {
       
-      await Chasis.find({chasis: chasis}).then((res) => {
-        if (res) {
+      await Chasis.find({chasis: chasis}).then((res) => {        
+        if (res.length > 0) {
           this.resultado = errorHandler(false, 200, 'OK', res);
         } else {
           this.resultado = errorHandler(true, 400, 'OK', res);

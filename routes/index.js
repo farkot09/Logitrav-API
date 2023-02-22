@@ -2,6 +2,7 @@ const motonavesRouter = require('./motonaves.router');
 const blsRouter = require('./bls.router');
 const chasisRouter = require('./chasis.router');
 const operacionesRouter = require('./operaciones.router');
+const programacionRouter = require('./programacion.router');
 const express = require('express');
 
 const routerApi = (app) => {
@@ -11,6 +12,7 @@ const routerApi = (app) => {
   router.use('/bls', blsRouter);
   router.use('/chasis', chasisRouter);
   router.use('/operaciones', operacionesRouter);
+  router.use('/programacion', programacionRouter);
 };
 
 module.exports = routerApi;

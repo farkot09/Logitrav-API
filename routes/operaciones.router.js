@@ -37,6 +37,8 @@ router.get('/marcacion/motonave/:id', async(req, res) => {
 //------------FIN RUTAS DE MARCACION A BORDO --------------//
 
 
+
+
 //------------INICIO RUTAS DE RECIBOENPATIO --------------//
 
 router.post('/recibo/', async(req, res) => {
@@ -56,6 +58,8 @@ router.get('/recibo/motonave/:id', async(req, res) => {
 
 //------------FIN RUTAS DE RECIBOENPATIO --------------//
 
+
+
 //------------INICIO RUTAS DE TOMA --------------//
 
 router.post('/toma/', async(req, res) => {
@@ -74,6 +78,8 @@ router.get('/toma/motonave/:id', async(req, res) => {
 
 //------------FIN RUTAS DE TOMA --------------//
 
+
+
 //------------INICIO RUTAS DE NUMERACION --------------//
 
 router.get('/numeracion/', async(req, res) => {  
@@ -89,6 +95,8 @@ router.post('/cargarNumeracion/',upload.single("miArchvo"), async(req, res) => {
 });
 
 //------------FIN RUTAS DE NUMERACION --------------//
+
+
 
 //----- INICIO DE SERVICIOS DE REVISION ------------------//
 
