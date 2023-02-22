@@ -2,6 +2,21 @@ const express = require('express');
 const router = express.Router();
 const ChasisServices = require("../services/chasis.service")
 const XLSX = require('xlsx');
+const multer = require("multer")
+
+
+let nombreArchivo = {}
+const storage = multer.diskStorage({
+  destination: function(req, file, cb){
+    cb(null, "uploads/")
+  },
+  filename: function(req,file,cb){
+    nombreArchivo = "CHASIS.xlsx";
+    cb(null, nombreArchivo)
+  }
+})
+
+const upload = multer({storage: storage})
 
 const service = new ChasisServices()
 
@@ -49,6 +64,13 @@ router.get('/generarPlantilla/:id', async(req, res) => {
   res.setHeader('Content-Type', 'application/vnd.ms-excel');
   res.end(buf);   
   
+});
+
+router.post('/cargarChasis/',upload.single("miArchvo"), async(req, res) => {  
+  console.log("ruta");
+  const data = await service.cargarChasis()
+  res.status(200).json(data)  
+    
 });
 
 
