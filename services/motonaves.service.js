@@ -47,7 +47,7 @@ class motonaveService {
   }
 
   async activas() {
-    await Motonave.find({operacion: true})
+    await Motonave.find({ operacion: true })
       .then((data) => {
         this.resultado = errorHandler(false, 200, 'OK', data);
       })
@@ -59,14 +59,13 @@ class motonaveService {
 
   async buscarUno(id) {
     if (ObjectId.isValid(id)) {
-      await Motonave.findById({ _id: id })
-        .then((res) => {
-          if (res) {
-            this.resultado = errorHandler(false, 200, 'OK', res);
-          } else {
-            this.resultado = errorHandler(true, 400, 'OK', res);
-          }
-        })
+      await Motonave.findById({ _id: id }).then((res) => {
+        if (res) {
+          this.resultado = errorHandler(false, 200, 'OK', res);
+        } else {
+          this.resultado = errorHandler(true, 400, 'OK', res);
+        }
+      });
     } else {
       this.resultado = errorHandler(
         true,
@@ -116,16 +115,20 @@ class motonaveService {
 
   async eliminar(id) {
     if (ObjectId.isValid(id)) {
-      await Motonave.findByIdAndDelete({_id:id}).then((res) => {
+      await Motonave.findByIdAndDelete({ _id: id }).then((res) => {
         if (res) {
-          this.resultado = errorHandler(false,200, "Eliminated", id )
-        }else{
-          this.resultado = errorHandler(true, 400, "id Not Exist", [])
+          this.resultado = errorHandler(false, 200, 'Eliminated', id);
+        } else {
+          this.resultado = errorHandler(true, 400, 'id Not Exist', []);
         }
-      })
+      });
     } else {
-      this.resultado = errorHandler(true, 400, "'id Not valid, not as ObjectId", [])
-      
+      this.resultado = errorHandler(
+        true,
+        400,
+        "'id Not valid, not as ObjectId",
+        []
+      );
     }
     return this.resultado;
   }

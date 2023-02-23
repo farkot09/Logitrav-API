@@ -6,19 +6,27 @@ const DespachosSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref:"Motonave"
     },
-    id_bl: {
-        type: Schema.Types.ObjectId,
-        ref:"Bl"
-    },
-    id_chasis: {
-        type: Schema.Types.ObjectId,
-        ref:"Chasis"
-    },
+    nombre_motonave: String,    
+    numero_bl: String,    
+    transporte: String,    
+    condicion: String,    
+    marca: String,    
+    modelo: String,    
+    chasis: {
+        type: String,
+        unique:true
+    },    
+    version: String,    
+    color: String,    
+    motor: String,    
+    id_usuario_recibo: String,
+    fecha_recibo: Date,
     conductor: String,
     cedula: String,
     placa: String,
-    planilla: String,
+    planilla: Number,
     novedad:String,
+    id_usuario_despacho: String,
     fecha_despacho:Date,
 })
 

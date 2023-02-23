@@ -58,13 +58,16 @@ class ChasisServices {
 
   async buscarUno(id) {
     if (ObjectId.isValid(id)) {
-      await Chasis.findById({ _id: id }).then((res) => {
-        if (res) {
-          this.resultado = errorHandler(false, 200, 'OK', res);
-        } else {
-          this.resultado = errorHandler(true, 400, 'OK', res);
-        }
-      });
+      await Chasis.findById({ _id: id })
+        .populate('id_motonave')
+        .populate('id_bl')
+        .then((res) => {
+          if (res) {
+            this.resultado = errorHandler(false, 200, 'OK', res);
+          } else {
+            this.resultado = errorHandler(true, 400, 'OK', res);
+          }
+        });
     } else {
       this.resultado = errorHandler(
         true,
@@ -110,9 +113,12 @@ class ChasisServices {
 
   async buscarPorMotonave(id) {
     if (ObjectId.isValid(id)) {
-      await Chasis.find({ id_motonave: id }).then((res) => {
-        this.resultado = errorHandler(false, 200, 'OK', res);
-      });
+      await Chasis.find({ id_motonave: id })
+        .populate('id_motonave')
+        .populate('id_bl')
+        .then((res) => {
+          this.resultado = errorHandler(false, 200, 'OK', res);
+        });
     } else {
       this.resultado = errorHandler(
         true,

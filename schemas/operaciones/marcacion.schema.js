@@ -10,8 +10,8 @@ const MarcacionSchema = new Schema({
   id_chasis: {
     type: Schema.Types.ObjectId,
     ref: 'Chasis',
-    unique:true
-  },
+    unique: true,
+  } /*  */,
   fecha: Date,
 });
 

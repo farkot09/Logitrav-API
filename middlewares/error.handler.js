@@ -8,5 +8,4 @@ const errorHandler = (error, statusCode, message, data) => {
     }
 };
 
-
 module.exports = { errorHandler };
