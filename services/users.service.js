@@ -28,20 +28,21 @@ class BlsServices {
   }
 
   async login(data) {
-    const {usuario, password} = data
+    const {usuario, password} = data    
     await User.find({usuario}).then((r) =>{
-        if (!r) {
-            return this.resultado = errorHandler(true, 400, 'invalid credentials', r);
+        if (r.length <= 0) {
+            return this.resultado = errorHandler(true, 400, 'invalid credentials', []);
         }
         
-        if (!r[0].password === password) {
-            return this.resultado = errorHandler(true, 400, 'invalid Credentials', r);
+        if (r[0].password !== password) {
+            return this.resultado = errorHandler(true, 400, 'invalid Credentials', []);
         }
 
         this.resultado = tokenSing({
-            _id:r[0]._id,
-            role:r[0].rol
-        })
+          _id:r[0]._id,
+          role:r[0].rol,
+          dataUser:r[0]
+      })
         
     })
     return this.resultado;

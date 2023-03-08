@@ -2,14 +2,16 @@ const jwt = require("jsonwebtoken")
 const { errorHandler } = require('../middlewares/error.handler');
 
 const tokenSing = async (user) =>{
-    return errorHandler(false, 200, 'OK', jwt.sign({
+    return errorHandler(false, 200, 'OK', {token:jwt.sign({
         _id: user._id,
         role: user.role,       
     },
     process.env.SECRET_KEY,
     {
-        expiresIn: "2h",
-    }))   
+        expiresIn: "6h",
+    }),dataUser:user.dataUser
+           
+})   
 }
 
 const verifyToken = async(token) => {

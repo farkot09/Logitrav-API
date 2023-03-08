@@ -22,7 +22,7 @@ class motonaveService {
     await newMotonave
       .save()
       .then((data) => {
-        this.resultado = errorHandler(false, 201, 'Crated', data);
+        this.resultado = errorHandler(false, 201, 'Created', data);
       })
       .catch((error) => {
         this.resultado = errorHandler(
