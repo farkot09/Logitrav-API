@@ -115,7 +115,7 @@ class motonaveService {
 
   async eliminar(id) {
     if (ObjectId.isValid(id)) {
-      await Motonave.findByIdAndDelete({ _id: id }).then((res) => {
+      await Motonave.findOneAndDelete({ _id: id, operacion:false }).then((res) => {
         if (res) {
           this.resultado = errorHandler(false, 200, 'Eliminated', id);
         } else {
