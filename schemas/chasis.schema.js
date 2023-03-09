@@ -12,7 +12,7 @@ const ChasisSchema = new Schema({
     },
     chasis: {
         type: String,
-        unique: true
+        unique:true
     },
     modelo: String,
     version: String,

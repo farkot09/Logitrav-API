@@ -116,7 +116,7 @@ class ChasisServices {
       await Chasis.find({ id_motonave: id })
         .populate('id_motonave')
         .populate('id_bl')
-        .then((res) => {
+        .then((res) => {                    
           this.resultado = errorHandler(false, 200, 'OK', res);
         });
     } else {
@@ -131,7 +131,7 @@ class ChasisServices {
   }
 
   async generarPlantilla(id) {
-    const mn = await servicesMotonaves.buscarUno(id);
+    const mn = await servicesMotonaves.buscarUno(id);    
     const bls = await servicesBl.buscarPorMotonave(id);
     var item = 0;
 
@@ -142,20 +142,22 @@ class ChasisServices {
         'Data Bls Quatity is not correct',
         mn.data.cantidad_bls
       ));
+    } else {
+      var headerE = [
+        'item',
+        'id_motonave',
+        'nombre_motonave',
+        'id_bl',
+        'numeroBl',
+        'chasis',
+        'modelo',
+        'version',
+        'color',
+        'motor',
+      ];
     }
 
-    var headerE = [
-      'item',
-      'id_motonave',
-      'nombre_motonave',
-      'id_bl',
-      'numeroBl',
-      'chasis',
-      'modelo',
-      'version',
-      'color',
-      'motor',
-    ];
+    
     var dataE = [];
     for (let index = 0; index < bls.data.length; index++) {
       const element = bls.data[index];
@@ -198,6 +200,7 @@ class ChasisServices {
       workbook.Sheets[sheet_name_list[0]]
     );
 
+      
     for (let i = 0; i < xlData.length; i++) {
       const newChasis = new Chasis({
         id_motonave: xlData[i].id_motonave,
