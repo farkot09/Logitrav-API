@@ -28,7 +28,9 @@ class OperacionesServices {
 
     const resChasis = await servicesChasis.buscarUno(id_chasis);
 
-    if (resChasis.error === false) {
+    await this.marcacionPorChasis(id_chasis).then(async(res) => {
+      if (res.data.length === 0) {
+         if (resChasis.error === false) {
       await newMarcacion
         .save()
         .then((res) => {
@@ -46,6 +48,12 @@ class OperacionesServices {
       );
     }
 
+      }else{
+        this.resultado = errorHandler(true, 400, 'Chasis Duplicated', res.message);
+      }
+    })
+
+   
     return this.resultado;
   }
 
