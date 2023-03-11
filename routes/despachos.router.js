@@ -17,6 +17,12 @@ router.post('/novedad/:chasis', async (req, res) => {
   res.status(200).json(data);
 });
 
+router.get('/motonave/:id', async (req, res) => {
+  const id = req.params.id;  
+  const data = await service.despachosPorMotonave(id);
+  res.status(200).json(data);
+});
+
 router.delete('/:chasis', async (req, res) => {
   const chasis = req.params.chasis;
   const data = await service.desacerDespacho(chasis);

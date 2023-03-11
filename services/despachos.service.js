@@ -3,6 +3,7 @@ const { errorHandler } = require('../middlewares/error.handler');
 const ChasisServices = require('../services/chasis.service');
 const ProgramacionServices = require('../services/programacion.service');
 const OperacionesServices = require('../services/operaciones.service');
+const ObjectId = require('mongoose').Types.ObjectId;
 
 const servicesChasis = new ChasisServices();
 const servicesProgramacion = new ProgramacionServices();
@@ -110,6 +111,22 @@ class BlsServices {
       this.resultado = errorHandler(false, 200, `ok`, r);
     });
 
+    return this.resultado;
+  }
+
+  async despachosPorMotonave(id) {
+    if (ObjectId.isValid(id)) {
+      await Despachos.find({ id_motonave: id }).then((res) => {
+        this.resultado = errorHandler(false, 200, 'OK', res);
+      });
+    } else {
+      this.resultado = errorHandler(
+        true,
+        400,
+        'id Not valid, not as ObjectId',
+        []
+      );
+    }
     return this.resultado;
   }
 }
